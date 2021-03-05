@@ -14,7 +14,7 @@ For example, I use Dropbox as my paper library and set `new_dir = "/Users/yuancc
 
 * `non_arxiv_dir` is the directory to store other pdf files. 
 
-Run the code with python `python rename_arxiv.py` and the code will scan the folder every `waittile` second(s) until stopped by `ctrl+C`. During the running time
-any arxiv paper saved to the folder will be renamed to the **`Author(Year)-Title.pdf`** format. The code will also ask you where to drop the renamed paper.
-You can select the existing subfolders under `new_dir` or create a new one by inputting the corresponding index. Pressing the `enter/return`
+Run the code with python `python rename_arxiv.py` and it will scan the folder every `waittile` second(s) until stopped by `ctrl+C`. During the running time,
+any arxiv papers saved to the folder will be renamed to the **`Author(Year)-Title.pdf`** format. Some options will be provided to drop the renamed paper.
+You can select the existing subfolders under `new_dir` or create a new one by entering the corresponding indices. Pressing the `enter/return`
  key in this step will simply move the paper to `non_arxiv_dir`.
