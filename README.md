@@ -9,7 +9,7 @@ Copy **`rename_arxiv.py`** to the default folder where arxiv papers are saved, u
 
 Before running the code, modify the following quantities in **`rename_arxiv.py`** 
 
-* `new_dir:` directory to store the renamed paper. It may contain may subdirectories to categorize the papers by, e.g., journals, years and keywords, etc. 
+* `new_dir:` directory to store the renamed papers. It may contain may subdirectories to categorize the papers by, e.g., journals, years and keywords, etc. 
 For example, I use Dropbox as my paper library and I set `new_dir = "/Users/yuancc/Dropbox/"`. 
 
 * `non_arxiv_dir` is the directory to store other pdf files. 
