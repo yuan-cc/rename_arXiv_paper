@@ -1,4 +1,4 @@
-## Rename and sort the papers downloaded from arXiv
+## Rename and sort papers downloaded from arXiv
 ### Requirements
 * Python 3.7 (recommended)
 * Packages: arxiv, requests and pdfrw, which can be installed with pip,
