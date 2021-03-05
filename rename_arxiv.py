@@ -9,8 +9,8 @@ from pdfrw import PdfReader, PdfWriter
 from glob import glob
 import signal
 
-new_path = '/Users/yuancc/Dropbox/'  #destination folder
-non_arxiv_path = '/Users/yuancc/Downloads/other_pdf/' # to accommodate non-arxiv pdf files
+new_dir = '/Users/yuancc/Dropbox/'  #destination folder
+non_arxiv_dir = '/Users/yuancc/Downloads/other_pdf/' # to accommodate non-arxiv pdf files
 
 waittime = 1 # wait [waittime] seconds between each loop
 
@@ -24,7 +24,7 @@ TIMEOUT = 9999
 
 def input_des():
     try:
-            foo = int(input("Input the destination index, an integer >> "))
+            foo = int(input("Input the index >> "))
             return foo
     except:
             # timeout
@@ -43,8 +43,8 @@ try:
 
         pdfs = [f for f in next(os.walk(os.getcwd()))[2] if f.endswith('.pdf')]
         if len(pdfs) > 0:
-            if not os.path.exists(new_path):
-                os.makedirs(new_path)
+            if not os.path.exists(new_dir):
+                os.makedirs(new_dir)
             try:
                 requests.head('https://arxiv.org/')
             except requests.ConnectionError:
@@ -58,10 +58,10 @@ try:
 
             try:
                 if(len(pdf) > 15):
-                    if not os.path.exists(new_path):
-                        os.makedirs(new_path)
-                    shutil.move(pdf,non_arxiv_path+pdf)
-                    print('Moved to '+non_arxiv_path)
+                    if not os.path.exists(new_dir):
+                        os.makedirs(new_dir)
+                    shutil.move(pdf,non_arxiv_dir+pdf)
+                    print('Moved to '+non_arxiv_dir)
                     time.sleep(waittime)
                     continue
 
@@ -85,20 +85,20 @@ try:
                 print('Move'+'\033[1m' +'\"'+pdf_name+'\"'+'\033[0m'+' to')
 
                 n=0
-                print("\033[1m 0\033[0m : "+new_path)
-                subfolders = glob(new_path+"*/")
+                print("\033[1m"+"0\033[0m: "+new_dir)
+                subfolders = glob(new_dir+"*/")
                 for item in subfolders:
                     n=n+1
                     print('\033[1m'+str(n)+'\033[0m: '+item)
                 print('\033[1m'+str(n+1)+'\033[0m:'+' new folder')
-                print('Return/enter key: '+non_arxiv_path)
+                print('Return/enter key: '+non_arxiv_dir)
 
                 signal.alarm(TIMEOUT)
                 destination=input_des()
                 signal.alarm(0)
 
                 if(destination==0):
-                    path=new_path
+                    path=new_dir
                     shutil.move(pdf,path+pdf_name)
                     print("Moved to "+path)
                 elif(destination>0 and destination <= len(subfolders)):
@@ -108,21 +108,21 @@ try:
                 elif(destination == len(subfolders)+1):
                     print('Input the name of the new folder: (xxx/)')
                     newfolder=str(input() or " ")
-                    path=new_path+newfolder
+                    path=new_dir+newfolder
                     os.mkdir(path)
                     shutil.move(pdf,path+pdf_name)
                     print("Moved to "+path)
                 else:
-                    if not os.path.exists(new_path):
-                        os.makedirs(new_path)
-                    shutil.move(pdf,non_arxiv_path+pdf_name)
-                    print('Moved to '+non_arxiv_path)
+                    if not os.path.exists(new_dir):
+                        os.makedirs(new_dir)
+                    shutil.move(pdf,non_arxiv_dir+pdf_name)
+                    print('Moved to '+non_arxiv_dir)
 
             except:
-                if not os.path.exists(new_path):
-                    os.makedirs(new_path)
-                shutil.move(pdf,non_arxiv_path+pdf)
-                print('Moved to '+non_arxiv_path)
+                if not os.path.exists(new_dir):
+                    os.makedirs(new_dir)
+                shutil.move(pdf,non_arxiv_dir+pdf)
+                print('Moved to '+non_arxiv_dir)
 
         time.sleep(waittime)
 
