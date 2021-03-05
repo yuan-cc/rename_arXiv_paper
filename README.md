@@ -5,9 +5,9 @@
 ``` pip intall arxiv requests pdfrw ```
 
 ### Run the code
-Copy **`rename_arxiv.py`** to the default folder where arxiv papers are saved, typically `~/Downloads/` for MAC/Linux users. 
+Copy **`rename_arxiv.py`** to the default folder where arxiv papers are saved, usually `~/Downloads/` for MAC/Linux users. 
 
-Before running the code, modify the following 
+Before running the code, modify the following quantities in **`rename_arxiv.py`** 
 
 * `new_dir:` directory to store the renamed paper. It may contain may subdirectories to categorize the papers by, e.g., journals, years and keywords, etc. 
 For example, I use Dropbox as my paper library and I set `new_dir = "/Users/yuancc/Dropbox/"`. 
