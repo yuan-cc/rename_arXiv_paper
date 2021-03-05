@@ -1,0 +1,20 @@
+## Rename and sort the papers downloaded from arXiv
+### Requirements
+* Python 3.7 (recommended)
+* Packages: arxiv, requests and pdfrw, which can be installed, e.g., using pip,
+``` pip intall arxiv requests pdfrw ```
+
+### Run the code
+Copy **`rename_arxiv.py`** to the default folder where arxiv papers are saved, typically `~/Downloads/` for MAC/Linux users. 
+
+Before running the code, modify the following 
+
+* `new_dir:` directory to store the renamed paper. It may contain may subdirectories to categorize the papers by, e.g., journals, years and keywords, etc. 
+For example, I use Dropbox as my paper library and I set `new_dir = "/Users/yuancc/Dropbox/"`. 
+
+* `non_arxiv_dir` is the directory to store other pdf files. 
+
+Run the code with python 'python rename_arxiv.py' and the code will scan the folder every `waittile` second(s) until it is stopped by `ctrl+C`. During the running time
+any arxiv paper saved to the folder will be renamed to the **`Author(Year)-Title.pdf`** format. The code will also ask you where to drop the renamed paper.
+You can select the existing subfolders under `new_dir` or create a new one by inputting the corresponding index.
+
