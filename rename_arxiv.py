@@ -30,6 +30,18 @@ def input_des():
             # timeout
             return -1
 
+def manual_rename():
+        author=input("Authors >> ") or -1
+        year=input("Year    >> ") or -1
+        title=input("Title   >> ") or -1
+        if author != -1 and year != -1 and title !=-1:
+            title = title.replace(':', '').replace(',', '').replace('-',' ')
+            return author + ' (' + year + ') - ' + title + '.pdf'
+        else:
+            return -1
+
+
+
 
 
 print('--------------------------------------')
@@ -58,10 +70,63 @@ try:
 
             try:
                 if(len(pdf) > 15):
-                    if not os.path.exists(new_dir):
-                        os.makedirs(new_dir)
-                    shutil.move(pdf,non_arxiv_dir+pdf)
-                    print('Moved to '+non_arxiv_dir)
+                    print('Drop '+'\033[1m \"'+pdf+'\" \033[0m'+" to:")
+                    subfolders = glob(new_dir+"*/")
+                    subfolders.sort()
+                    n=0
+                    print("\033[1m"+"0\033[0m: "+new_dir)
+                    for item in subfolders:
+                        n=n+1
+                        sub_dir=item.replace(new_dir,'')
+                        print('\033[1m'+str(n)+'\033[0m: '+sub_dir)
+
+                    print('\033[1m'+str(n+1)+'\033[0m:'+' new folder')
+                    print('Return/enter key: '+non_arxiv_dir)
+
+                    signal.alarm(TIMEOUT)
+                    destination=input_des()
+                    signal.alarm(0)
+
+                    if(destination==0):
+                        path=new_dir
+                        pdf_name = manual_rename()
+                        if pdf_name != -1:
+                            shutil.move(pdf,path+pdf_name)
+                            print("Move the renamed pdf to "+path)
+                        else:
+                            shutil.move(pdf,path+pdf)
+                            print("Move the origianl pdf to "+path)
+
+                    elif(destination>0 and destination <= len(subfolders)):
+                        path = subfolders[destination-1]
+                        pdf_name = manual_rename()
+                        if pdf_name != -1:
+                            shutil.move(pdf,path+pdf_name)
+                            print("Move the renamed pdf to "+path)
+                        else:
+                            shutil.move(pdf,path+pdf)
+                            print("Move the original pdf to "+path)
+
+                    elif(destination == len(subfolders)+1):
+                        print('Input the name of the new folder: (xxx/)')
+                        newfolder=str(input() or " ")
+                        path=new_dir+newfolder
+                        os.mkdir(path)
+                        pdf_name = manual_rename()
+                        if pdf_name != -1:
+                            shutil.move(pdf,path+pdf_name)
+                            print("Move the renamed pdf to "+path)
+                        else:
+                            shutil.move(pdf,path+pdf)
+                            print("Move the original pdf to "+path)
+
+                    else:
+                        if not os.path.exists(new_dir):
+                            os.makedirs(new_dir)
+                        shutil.move(pdf,non_arxiv_dir+pdf)
+                        print('Move the original pdf to '+non_arxiv_dir)
+                    print('')
+
                     time.sleep(waittime)
                     continue
 
@@ -82,14 +147,16 @@ try:
                 pdf_name = authors + ' (' + year + ') - ' + title + '.pdf'
 
                 print()
-                print('Move'+'\033[1m' +'\"'+pdf_name+'\"'+'\033[0m'+' to')
+                print('Move the'+'\033[1m' +'\"'+pdf_name+'\"'+'\033[0m'+' to')
 
                 n=0
                 print("\033[1m"+"0\033[0m: "+new_dir)
                 subfolders = glob(new_dir+"*/")
+                subfolders.sort()
                 for item in subfolders:
                     n=n+1
-                    print('\033[1m'+str(n)+'\033[0m: '+item)
+                    sub_dir=item.replace(new_dir,'')
+                    print('\033[1m'+str(n)+'\033[0m: '+sub_dir)
                 print('\033[1m'+str(n+1)+'\033[0m:'+' new folder')
                 print('Return/enter key: '+non_arxiv_dir)
 
@@ -100,29 +167,82 @@ try:
                 if(destination==0):
                     path=new_dir
                     shutil.move(pdf,path+pdf_name)
-                    print("Moved to "+path)
+                    print("Move the renamded pdf to "+path)
                 elif(destination>0 and destination <= len(subfolders)):
                     path = subfolders[destination-1]
                     shutil.move(pdf,path+pdf_name)
-                    print("Moved to "+path)
+                    print("Move the original pdf to "+path)
                 elif(destination == len(subfolders)+1):
                     print('Input the name of the new folder: (xxx/)')
                     newfolder=str(input() or " ")
                     path=new_dir+newfolder
                     os.mkdir(path)
                     shutil.move(pdf,path+pdf_name)
-                    print("Moved to "+path)
+                    print("Move the renamed pdf to "+path)
                 else:
                     if not os.path.exists(new_dir):
                         os.makedirs(new_dir)
                     shutil.move(pdf,non_arxiv_dir+pdf_name)
-                    print('Moved to '+non_arxiv_dir)
+                    print('Move the original pdf to '+non_arxiv_dir)
 
             except:
-                if not os.path.exists(new_dir):
-                    os.makedirs(new_dir)
-                shutil.move(pdf,non_arxiv_dir+pdf)
-                print('Moved to '+non_arxiv_dir)
+                print('Drop '+'\033[1m \"'+pdf+'\" \033[0m'+" to:")
+                subfolders = glob(new_dir+"*/")
+                subfolders.sort()
+                n=0
+                print("\033[1m"+"0\033[0m: "+new_dir)
+                for item in subfolders:
+                    n=n+1
+                    sub_dir=item.replace(new_dir,'')
+                    print('\033[1m'+str(n)+'\033[0m: '+sub_dir)
+
+                print('\033[1m'+str(n+1)+'\033[0m:'+' new folder')
+                print('Return/enter key: '+non_arxiv_dir)
+
+                signal.alarm(TIMEOUT)
+                destination=input_des()
+                signal.alarm(0)
+
+                if(destination==0):
+                    path=new_dir
+                    pdf_name = manual_rename()
+                    if pdf_name != -1:
+                        shutil.move(pdf,path+pdf_name)
+                        print("Move the renamed pdf to "+path)
+                    else:
+                        shutil.move(pdf,path+pdf)
+                        print("Move the original pdf to "+path)
+
+                elif(destination>0 and destination <= len(subfolders)):
+                    path = subfolders[destination-1]
+                    pdf_name = manual_rename()
+                    if pdf_name != -1:
+                        shutil.move(pdf,path+pdf_name)
+                        print("Move the renamed pdf to "+path)
+                    else:
+                        shutil.move(pdf,path+pdf)
+                        print("Move the original pdf to "+path)
+
+                elif(destination == len(subfolders)+1):
+                    print('Input the name of the new folder: (xxx/)')
+                    newfolder=str(input() or " ")
+                    path=new_dir+newfolder
+                    os.mkdir(path)
+                    pdf_name = manual_rename()
+                    if pdf_name != -1:
+                        shutil.move(pdf,path+pdf_name)
+                        print("Move the renamed pdf to "+path)
+                    else:
+                        shutil.move(pdf,path+pdf)
+                        print("Move the original pdf to "+path)
+
+                else:
+                    if not os.path.exists(new_dir):
+                        os.makedirs(new_dir)
+                    shutil.move(pdf,non_arxiv_dir+pdf)
+                    print('Move the original pdf to '+non_arxiv_dir)
+
+            print('')
 
         time.sleep(waittime)
 
